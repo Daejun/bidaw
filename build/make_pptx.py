@@ -20,13 +20,14 @@ OUT_PATH = "/home/pdaejun/bidaw/Bidaw_seminar.pptx"
 SLIDE_W = Inches(13.333)
 SLIDE_H = Inches(7.5)
 
-# Color palette
-COLOR_PRIMARY = RGBColor(0x1F, 0x3A, 0x68)   # deep blue
-COLOR_ACCENT  = RGBColor(0xE8, 0x6A, 0x33)   # orange
+# Color palette — minimal: white background, near-black text, single grey rule
+COLOR_PRIMARY = RGBColor(0x1F, 0x29, 0x37)   # near-black for headings / strong words
+COLOR_ACCENT  = RGBColor(0x44, 0x44, 0x44)   # mid-grey for the (rare) emphasis
 COLOR_TEXT    = RGBColor(0x22, 0x22, 0x22)
-COLOR_LIGHT   = RGBColor(0x6B, 0x6B, 0x6B)
-COLOR_BG_BAND = RGBColor(0xF2, 0xF4, 0xF8)
-COLOR_RULE    = RGBColor(0xD0, 0xD5, 0xDD)
+COLOR_LIGHT   = RGBColor(0x70, 0x76, 0x80)   # caption / kicker / helper text
+COLOR_RULE    = RGBColor(0xD5, 0xD9, 0xE0)   # thin separator only
+COLOR_BG_BAND = RGBColor(0xFF, 0xFF, 0xFF)   # was a tinted band; now neutral white
+COLOR_WHITE   = RGBColor(0xFF, 0xFF, 0xFF)
 
 KOREAN_FONT  = "맑은 고딕"        # 한글
 LATIN_FONT   = "Calibri"         # 영문/숫자/기호
@@ -111,10 +112,17 @@ def add_rich_para(tf, segments, *, align="left", space_after=4, indent_level=0):
 
 
 def add_rect(slide, left, top, width, height, fill, line=None):
+    """Filled rectangle. In the minimal style, panels that used to be tinted
+    callout bands (fill=COLOR_BG_BAND, no border) are auto-promoted to a
+    bordered white box so the grouping meaning is kept without colour."""
+    auto_border = (line is None and tuple(fill) == tuple(COLOR_BG_BAND))
     shp = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, height)
     shp.fill.solid()
     shp.fill.fore_color.rgb = fill
-    if line is None:
+    if auto_border:
+        shp.line.color.rgb = COLOR_RULE
+        shp.line.width = Pt(0.5)
+    elif line is None:
         shp.line.fill.background()
     else:
         shp.line.color.rgb = line
@@ -131,18 +139,19 @@ def add_line(slide, x1, y1, x2, y2, color=COLOR_RULE, weight=1.0):
 
 
 def add_header_band(slide, title, *, kicker=None):
-    # Top band
-    add_rect(slide, 0, 0, SLIDE_W, Inches(0.9), fill=COLOR_PRIMARY)
-    # Title text
-    tf = add_textbox(slide, Inches(0.5), Inches(0.05), SLIDE_W - Inches(1.0), Inches(0.85),
-                     anchor="middle")
+    """Minimal header: no colour bar. Just a small grey kicker line, the
+    title in near-black bold, and a thin grey rule separating the body."""
+    tf = add_textbox(slide, Inches(0.5), Inches(0.4), SLIDE_W - Inches(1.0), Inches(0.85))
     if kicker:
         add_rich_para(tf, [
-            {"text": kicker, "size": 12, "bold": True, "color": RGBColor(0xF7, 0xC9, 0x9C)},
-        ], space_after=2)
+            {"text": kicker, "size": 11, "bold": True, "color": COLOR_LIGHT},
+        ], space_after=4)
     add_rich_para(tf, [
-        {"text": title, "size": 26, "bold": True, "color": RGBColor(0xFF, 0xFF, 0xFF)},
+        {"text": title, "size": 24, "bold": True, "color": COLOR_PRIMARY},
     ])
+    # thin separator under the title
+    add_line(slide, Inches(0.5), Inches(1.25), SLIDE_W - Inches(0.5), Inches(1.25),
+             color=COLOR_RULE, weight=0.75)
 
 
 def add_footer(slide, page_num, total=30):
@@ -195,51 +204,50 @@ def fig_path(fig_id):
 # ---- Slide 1: Title -------------------------------------------------------
 def slide_01():
     s = add_slide()
-    # Full color band
-    add_rect(s, 0, 0, SLIDE_W, SLIDE_H, fill=COLOR_PRIMARY)
-    # Accent bar
-    add_rect(s, 0, Inches(2.4), SLIDE_W, Inches(0.08), fill=COLOR_ACCENT)
-
-    tf = add_textbox(s, Inches(0.8), Inches(1.0), SLIDE_W - Inches(1.6), Inches(1.4))
+    # White background with one thin separator line under the title
+    tf = add_textbox(s, Inches(0.9), Inches(1.6), SLIDE_W - Inches(1.8), Inches(1.0))
     add_rich_para(tf, [
-        {"text": "FAST '26 Paper Seminar", "size": 14, "bold": True,
-         "color": RGBColor(0xF7, 0xC9, 0x9C)},
-    ], space_after=10)
-    add_rich_para(tf, [
-        {"text": "Bidaw: Enhancing Key-Value Caching for", "size": 32, "bold": True,
-         "color": RGBColor(0xFF, 0xFF, 0xFF)},
-    ], space_after=2)
-    add_rich_para(tf, [
-        {"text": "Interactive LLM Serving via", "size": 32, "bold": True,
-         "color": RGBColor(0xFF, 0xFF, 0xFF)},
-    ], space_after=2)
-    add_rich_para(tf, [
-        {"text": "Bidirectional Computation–Storage Awareness", "size": 32, "bold": True,
-         "color": RGBColor(0xFF, 0xFF, 0xFF)},
+        {"text": "FAST '26 PAPER SEMINAR", "size": 12, "bold": True, "color": COLOR_LIGHT},
     ])
 
-    tf2 = add_textbox(s, Inches(0.8), Inches(3.0), SLIDE_W - Inches(1.6), Inches(2.5))
+    tf_title = add_textbox(s, Inches(0.9), Inches(2.1), SLIDE_W - Inches(1.8), Inches(2.4))
+    add_rich_para(tf_title, [
+        {"text": "Bidaw", "size": 44, "bold": True, "color": COLOR_PRIMARY},
+    ], space_after=6)
+    add_rich_para(tf_title, [
+        {"text": "Enhancing Key-Value Caching for Interactive LLM Serving",
+         "size": 22, "color": COLOR_TEXT},
+    ], space_after=2)
+    add_rich_para(tf_title, [
+        {"text": "via Bidirectional Computation–Storage Awareness",
+         "size": 22, "color": COLOR_TEXT},
+    ])
+
+    add_line(s, Inches(0.9), Inches(4.55), Inches(4.5), Inches(4.55),
+             color=COLOR_RULE, weight=1.0)
+
+    tf2 = add_textbox(s, Inches(0.9), Inches(4.7), SLIDE_W - Inches(1.8), Inches(1.8))
     add_rich_para(tf2, [
-        {"text": "Shipeng Hu, Guangyan Zhang (Tsinghua) · Yuqi Zhou (CUGB) · ",
-         "size": 16, "color": RGBColor(0xE6, 0xEE, 0xFA)},
+        {"text": "Shipeng Hu, Guangyan Zhang (Tsinghua) · Yuqi Zhou (CUGB)",
+         "size": 14, "color": COLOR_TEXT},
     ], space_after=2)
     add_rich_para(tf2, [
         {"text": "Yaya Wei, Ziyan Zhong (China Telecom) · Jike Chen (Tsinghua)",
-         "size": 16, "color": RGBColor(0xE6, 0xEE, 0xFA)},
-    ], space_after=18)
+         "size": 14, "color": COLOR_TEXT},
+    ], space_after=14)
     add_rich_para(tf2, [
         {"text": "24th USENIX Conference on File and Storage Technologies",
-         "size": 14, "italic": True, "color": RGBColor(0xC0, 0xCF, 0xE8)},
+         "size": 12, "italic": True, "color": COLOR_LIGHT},
     ], space_after=2)
     add_rich_para(tf2, [
         {"text": "February 24–26, 2026 · Santa Clara, CA",
-         "size": 14, "italic": True, "color": RGBColor(0xC0, 0xCF, 0xE8)},
+         "size": 12, "italic": True, "color": COLOR_LIGHT},
     ])
 
-    tf3 = add_textbox(s, Inches(0.8), SLIDE_H - Inches(1.2), SLIDE_W - Inches(1.6), Inches(0.6))
+    tf3 = add_textbox(s, Inches(0.9), SLIDE_H - Inches(0.9), SLIDE_W - Inches(1.8), Inches(0.5))
     add_rich_para(tf3, [
         {"text": "발표자: ____________   ·   세미나 일시: ____________",
-         "size": 12, "color": RGBColor(0x9D, 0xB1, 0xD1)},
+         "size": 11, "color": COLOR_LIGHT},
     ])
 
 
@@ -257,25 +265,19 @@ def slide_02():
         ("7", "Evaluation",  "5개 모델 · 50분간 토크의 핵심 plot 7개"),
         ("8", "Discussion",  "한계, 일반화 가능성, takeaway"),
     ]
-    top0 = Inches(1.2)
-    row_h = Inches(0.65)
+    top0 = Inches(1.55)
+    row_h = Inches(0.62)
     for i, (n, head, body) in enumerate(items):
         y = top0 + row_h * i
-        # number circle
-        circ = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(0.7), y + Inches(0.05),
-                                  Inches(0.5), Inches(0.5))
-        circ.fill.solid(); circ.fill.fore_color.rgb = COLOR_ACCENT
-        circ.line.fill.background()
-        ctf = circ.text_frame; ctf.margin_left = ctf.margin_right = Inches(0)
-        ctf.margin_top = ctf.margin_bottom = Inches(0)
-        ctf.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cp = ctf.paragraphs[0]; cp.alignment = PP_ALIGN.CENTER
-        cr = cp.add_run(); set_run(cr, n, size=16, bold=True, color=RGBColor(0xFF, 0xFF, 0xFF))
-
-        tf = add_textbox(s, Inches(1.4), y, Inches(11), row_h)
+        # Light grey leading number, no circle
+        n_tf = add_textbox(s, Inches(0.55), y, Inches(0.65), row_h, anchor="middle")
+        add_rich_para(n_tf, [
+            {"text": n, "size": 18, "bold": True, "color": COLOR_LIGHT},
+        ], align="right")
+        tf = add_textbox(s, Inches(1.35), y, Inches(11), row_h, anchor="middle")
         add_rich_para(tf, [
-            {"text": head, "size": 18, "bold": True, "color": COLOR_PRIMARY},
-            {"text": "    " + body, "size": 14, "color": COLOR_TEXT},
+            {"text": head, "size": 17, "bold": True, "color": COLOR_PRIMARY},
+            {"text": "    " + body, "size": 13, "color": COLOR_TEXT},
         ])
     add_footer(s, 2)
 
@@ -663,19 +665,20 @@ def slide_12():
     add_rich_para(tf2, [
         {"text": "→ 정보 부재로 인해 hit rate ≈ 20% 수준",
          "size": 14, "italic": True, "color": COLOR_ACCENT}])
-    # Bottom big arrow callout
-    add_rect(s, Inches(0.5), Inches(4.5), Inches(12.3), Inches(2.4), fill=COLOR_PRIMARY)
+    # Bottom take-away — bordered white box, no fill colour
+    add_rect(s, Inches(0.5), Inches(4.5), Inches(12.3), Inches(2.4),
+             fill=COLOR_WHITE, line=COLOR_RULE)
     tfb = add_textbox(s, Inches(0.7), Inches(4.6), Inches(12), Inches(2.2),
                       anchor="middle")
     add_rich_para(tfb, [
-        {"text": "문제는 둘 다 ", "size": 18, "color": RGBColor(0xFF, 0xFF, 0xFF)},
+        {"text": "문제는 둘 다 ", "size": 18, "color": COLOR_TEXT},
         {"text": "정보가 한쪽 방향으로만 흐르거나, 아예 흐르지 않는다는 것",
-         "size": 18, "bold": True, "color": RGBColor(0xFF, 0xCC, 0x99)},
+         "size": 18, "bold": True, "color": COLOR_PRIMARY},
     ], align="center", space_after=6)
     add_rich_para(tfb, [
-        {"text": "Bidaw의 가설: ", "size": 16, "color": RGBColor(0xE6, 0xEE, 0xFA)},
+        {"text": "Bidaw의 가설: ", "size": 15, "color": COLOR_LIGHT},
         {"text": "두 방향 모두 정보를 흐르게 하면 두 문제 모두 해결된다",
-         "size": 16, "bold": True, "color": RGBColor(0xFF, 0xFF, 0xFF)},
+         "size": 15, "bold": True, "color": COLOR_PRIMARY},
     ], align="center")
     add_footer(s, 12)
 
@@ -779,14 +782,14 @@ def slide_15():
         ("④", "Free perf-layer 공간이 임계 미만이 되면 eviction 트리거",
               "→ Hit potential 최저 KV를 capacity layer로 이동 (inclusive caching)"),
     ]
-    top0 = Inches(1.3)
+    top0 = Inches(1.4)
     row_h = Inches(1.3)
     for i, (n, head, sub) in enumerate(steps):
         y = top0 + row_h * i
-        add_rect(s, Inches(0.5), y, Inches(0.7), Inches(1.1), fill=COLOR_PRIMARY)
-        ntb = add_textbox(s, Inches(0.5), y, Inches(0.7), Inches(1.1), anchor="middle")
+        # Number as plain large grey character, no filled block
+        ntb = add_textbox(s, Inches(0.5), y, Inches(0.8), Inches(1.1), anchor="middle")
         add_rich_para(ntb, [
-            {"text": n, "size": 28, "bold": True, "color": RGBColor(0xFF, 0xFF, 0xFF)}],
+            {"text": n, "size": 32, "bold": True, "color": COLOR_LIGHT}],
             align="center")
         tf = add_textbox(s, Inches(1.4), y + Inches(0.05), Inches(11.5), Inches(1.1))
         add_rich_para(tf, [
@@ -988,20 +991,18 @@ def slide_21():
         ("④", "Compute가 넘긴 답변 길이로 reuse distance 하한을 결정 → 더 작은 bucket의 확률을 0으로 truncate"),
         ("⑤", "Equation 2 로 overall hit potential 계산 → 가장 낮은 KV evict"),
     ]
-    top0 = Inches(1.3)
+    top0 = Inches(1.4)
     row_h = Inches(0.85)
     for i, (n, t) in enumerate(steps):
         y = top0 + row_h * i
-        circ = s.shapes.add_shape(MSO_SHAPE.OVAL, Inches(0.6), y + Inches(0.1),
-                                  Inches(0.55), Inches(0.55))
-        circ.fill.solid(); circ.fill.fore_color.rgb = COLOR_ACCENT
-        circ.line.fill.background()
-        ctf = circ.text_frame; ctf.vertical_anchor = MSO_ANCHOR.MIDDLE
-        cp = ctf.paragraphs[0]; cp.alignment = PP_ALIGN.CENTER
-        cr = cp.add_run(); set_run(cr, n, size=18, bold=True, color=RGBColor(0xFF, 0xFF, 0xFF))
-
-        tf = add_textbox(s, Inches(1.3), y + Inches(0.15), Inches(11), Inches(0.8))
-        add_rich_para(tf, [{"text": t, "size": 14}])
+        # Plain grey numeral, no circle
+        ntb = add_textbox(s, Inches(0.5), y, Inches(0.7), Inches(0.8), anchor="middle")
+        add_rich_para(ntb, [
+            {"text": n, "size": 22, "bold": True, "color": COLOR_LIGHT}],
+            align="center")
+        tf = add_textbox(s, Inches(1.3), y + Inches(0.05), Inches(11.5), Inches(0.8),
+                         anchor="middle")
+        add_rich_para(tf, [{"text": t, "size": 14, "color": COLOR_TEXT}])
     add_footer(s, 21)
 
 
