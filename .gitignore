@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+
+# Virtual environment (regenerate via: python3 -m venv .venv && .venv/bin/pip install ...)
+.venv/
+venv/
+env/
+
+# Editor / OS
+.~lock.*#
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Build / preview artifacts (regenerable from build/*.py)
+build/preview*.png
+build/cheat_*.png
+build/qa_*.png
+build/notes_*.png
+build/*_pg-*.png
+build/*_p2-*.png
+
+# Figure page-level backups (figure_NN.png are kept; page renders are regenerable)
+figures/pages/
