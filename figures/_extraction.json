@@ -1,0 +1,266 @@
+{
+  "1": {
+    "page": 2,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      311.9,
+      248.0,
+      569,
+      315.2
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_01.png"
+  },
+  "2": {
+    "page": 4,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      48.0,
+      70,
+      302.3,
+      175.9
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_02.png"
+  },
+  "3": {
+    "page": 4,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      301,
+      70,
+      551.0,
+      192.5
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_03.png"
+  },
+  "4": {
+    "page": 4,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      311.9,
+      231.4,
+      565.8,
+      326.1
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_04.png"
+  },
+  "7": {
+    "page": 5,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      316.9,
+      70,
+      551.0,
+      168.1
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_07.png"
+  },
+  "5": {
+    "page": 5,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      70,
+      292.2,
+      201.0
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_05.png"
+  },
+  "6": {
+    "page": 5,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      56.3,
+      232.6,
+      294.7,
+      316.4
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_06.png"
+  },
+  "8": {
+    "page": 6,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      70,
+      292.2,
+      176.7
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_08.png"
+  },
+  "9": {
+    "page": 6,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      314.8,
+      70,
+      558.6,
+      267.1
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_09.png"
+  },
+  "10": {
+    "page": 7,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      50.9,
+      70,
+      294.7,
+      152.1
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_10.png"
+  },
+  "11": {
+    "page": 7,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      327.7,
+      82.4,
+      539.7,
+      233.8
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_11.png"
+  },
+  "12": {
+    "page": 8,
+    "col": "full",
+    "used_graphics": true,
+    "bbox_pts": [
+      51.8,
+      70,
+      557.7,
+      235.3
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_12.png"
+  },
+  "13": {
+    "page": 9,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      48.0,
+      70,
+      307.0,
+      174.7
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_13.png"
+  },
+  "14": {
+    "page": 10,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      70,
+      297.2,
+      218.5
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_14.png"
+  },
+  "15": {
+    "page": 11,
+    "col": "full",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      70,
+      560.2,
+      159.3
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_15.png"
+  },
+  "16": {
+    "page": 11,
+    "col": "full",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      187.3,
+      560.2,
+      276.8
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_16.png"
+  },
+  "17": {
+    "page": 12,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      70,
+      309,
+      171.1
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_17.png"
+  },
+  "18": {
+    "page": 12,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      301,
+      70,
+      565.8,
+      192.9
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_18.png"
+  },
+  "19": {
+    "page": 13,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      63.5,
+      70,
+      282.1,
+      143.3
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_19.png"
+  },
+  "20": {
+    "page": 13,
+    "col": "right",
+    "used_graphics": true,
+    "bbox_pts": [
+      311.9,
+      70,
+      565.8,
+      159.4
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_20.png"
+  },
+  "21": {
+    "page": 14,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      70,
+      309,
+      187.0
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_21.png"
+  },
+  "22": {
+    "page": 14,
+    "col": "left",
+    "used_graphics": true,
+    "bbox_pts": [
+      46,
+      202.0,
+      309,
+      348.6
+    ],
+    "file": "/home/pdaejun/bidaw/figures/figure_22.png"
+  }
+}
