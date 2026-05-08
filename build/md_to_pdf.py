@@ -209,11 +209,25 @@ JOBS = [
         "subtitle": "논문 + 배경 지식 보강",
     },
     {
+        "md":  "/home/pdaejun/bidaw/Bidaw_study_notes_brief.md",
+        "pdf": "/home/pdaejun/bidaw/Bidaw_study_notes_brief.pdf",
+        "kicker":   "Study Notes — Brief",
+        "title":    "Bidaw 학습 노트 (간략판)",
+        "subtitle": "3–4 페이지 다이제스트",
+    },
+    {
         "md":  "/home/pdaejun/bidaw/Bidaw_qa.md",
         "pdf": "/home/pdaejun/bidaw/Bidaw_qa.pdf",
         "kicker":   "Anticipated Tough Questions",
         "title":    "Bidaw 예상 까다로운 질문 30선",
         "subtitle": "전문가 청중 방어용",
+    },
+    {
+        "md":  "/home/pdaejun/bidaw/Bidaw_qa_brief.md",
+        "pdf": "/home/pdaejun/bidaw/Bidaw_qa_brief.pdf",
+        "kicker":   "Q&A — Brief",
+        "title":    "Bidaw 예상 질문 10선 (간략판)",
+        "subtitle": "발표 직전 빠른 점검",
     },
     {
         "md":  "/home/pdaejun/bidaw/Bidaw_cheatsheet.md",
