@@ -33,7 +33,7 @@ disk-HRRN     R = 1 + waiting_time / KV_size
 Equation 2    Overall_potential
               = prob_small · 1.0
               + prob_extreme · 0.0
-              + Σᵢ prob_promising(i) · hit_promising(i)
+              + Σ_i prob_promising(i) · hit_promising(i)
                                                          (가장 낮은 KV를 evict)
 ```
 

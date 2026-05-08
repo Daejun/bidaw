@@ -17,12 +17,8 @@ Thumbs.db
 *.swo
 
 # Build / preview artifacts (regenerable from build/*.py)
-build/preview*.png
-build/cheat_*.png
-build/qa_*.png
-build/notes_*.png
-build/*_pg-*.png
-build/*_p2-*.png
+# All PNGs in build/ are diagnostic renders; never commit them.
+build/*.png
 
 # Figure page-level backups (figure_NN.png are kept; page renders are regenerable)
 figures/pages/

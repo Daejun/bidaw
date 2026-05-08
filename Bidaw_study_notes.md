@@ -12,7 +12,7 @@ Decoder-only LLM에서 한 토큰을 생성할 때:
 
 ```
 Q = X · W_Q,    K = X · W_K,    V = X · W_V
-A = softmax(Q · Kᵀ / √d) · V
+A = softmax(Q · K^T / sqrt(d)) · V
 ```
 
 - 새 토큰 1개를 생성할 때 자신의 `Q`만 새로 계산하면 된다.
@@ -257,7 +257,7 @@ Figure 13의 분석:
    ```
    Overall_potential = prob_small · 1.0
                      + prob_extreme · 0.0
-                     + Σᵢ prob_promising(i) · hit_promising(i)
+                     + Σ_i prob_promising(i) · hit_promising(i)
    ```
 6. Overall_potential이 가장 낮은 KV를 evict.
 

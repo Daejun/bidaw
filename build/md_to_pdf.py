@@ -23,7 +23,9 @@ CSS_STR = """
 }
 html { font-size: 11pt; }
 body {
-    font-family: "Noto Sans CJK KR", "Noto Sans", sans-serif;
+    /* DejaVu Sans is added so math/superscript glyphs (ᵀ ᵢ √ Σ) that the
+       Noto CJK KR family lacks still render instead of falling back to ?.   */
+    font-family: "Noto Sans CJK KR", "Noto Sans", "DejaVu Sans", sans-serif;
     color: #1f2937;
     line-height: 1.55;
     font-feature-settings: "kern" 1;
