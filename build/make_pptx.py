@@ -229,11 +229,11 @@ def slide_01():
     tf2 = add_textbox(s, Inches(0.9), Inches(4.7), SLIDE_W - Inches(1.8), Inches(1.8))
     add_rich_para(tf2, [
         {"text": "Shipeng Hu, Guangyan Zhang (Tsinghua) · Yuqi Zhou (CUGB)",
-         "size": 14, "color": COLOR_TEXT},
+         "size": 13, "color": COLOR_TEXT},
     ], space_after=2)
     add_rich_para(tf2, [
         {"text": "Yaya Wei, Ziyan Zhong (China Telecom) · Jike Chen (Tsinghua)",
-         "size": 14, "color": COLOR_TEXT},
+         "size": 13, "color": COLOR_TEXT},
     ], space_after=14)
     add_rich_para(tf2, [
         {"text": "24th USENIX Conference on File and Storage Technologies",
@@ -299,18 +299,18 @@ def slide_03():
         "사용자별 대화 지속 시간은 평균 분 단위, 길게는 60분 이상도 발생",
     ]:
         add_rich_para(tf, [
-            {"text": "•  ", "size": 14, "color": COLOR_ACCENT, "bold": True},
-            {"text": t, "size": 14}], space_after=4)
+            {"text": "•  ", "size": 13, "color": COLOR_ACCENT, "bold": True},
+            {"text": t, "size": 13}], space_after=4)
     add_rich_para(tf, [
         {"text": "기술적 핵심", "size": 16, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     for t in [
-        "라운드 N의 응답은 라운드 0..N-1의 모든 KV tensor를 다시 attention 입력으로 사용",
-        "이 KV를 재계산하면 GPU FLOPs를 매번 다시 태움 → caching이 필수",
+        "라운드 N 응답은 0..N-1 라운드 KV 를 attention 입력으로 재사용",
+        "재계산은 GPU FLOPs를 매번 태움 → KV caching이 필수",
     ]:
         add_rich_para(tf, [
-            {"text": "•  ", "size": 14, "color": COLOR_ACCENT, "bold": True},
-            {"text": t, "size": 14}], space_after=4)
+            {"text": "•  ", "size": 13, "color": COLOR_ACCENT, "bold": True},
+            {"text": t, "size": 13}], space_after=4)
     add_footer(s, 3)
 
 
@@ -319,29 +319,28 @@ def slide_04():
     s = add_slide()
     add_header_band(s, "KV cache의 역할 — attention 재계산을 막는 핵심 자료구조",
                     kicker="BACKGROUND")
-    # Schematic on right (custom drawing)
-    diag_left = Inches(7.0); diag_top = Inches(1.4)
-    add_rect(s, diag_left, diag_top, Inches(5.8), Inches(4.8), fill=COLOR_BG_BAND)
-    # Text: Q, K, V symbols and arrow
+    # Schematic on right (custom drawing) — wider to keep formula on one line
+    diag_left = Inches(6.7); diag_top = Inches(1.4)
+    add_rect(s, diag_left, diag_top, Inches(6.1), Inches(4.8), fill=COLOR_BG_BAND)
     tf_d = add_textbox(s, diag_left + Inches(0.2), diag_top + Inches(0.2),
-                       Inches(5.4), Inches(4.4))
+                       Inches(5.7), Inches(4.4))
     add_rich_para(tf_d, [
-        {"text": "Self-attention(요점)", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "Self-attention(요점)", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     add_rich_para(tf_d, [
-        {"text": "Attention(Q, K, V) = softmax(Q · Kᵀ / √d) · V",
-         "size": 16, "mono": True}], space_after=10)
+        {"text": "Attention(Q,K,V) = softmax(Q·K^T / sqrt(d))·V",
+         "size": 13, "mono": True}], space_after=10)
     add_rich_para(tf_d, [
-        {"text": "▸ 새 토큰 1개의 Q만 새로 계산", "size": 14}], space_after=2)
+        {"text": "▸ 새 토큰 1개의 Q만 새로 계산", "size": 13}], space_after=2)
     add_rich_para(tf_d, [
-        {"text": "▸ 과거 토큰의 K, V는 변하지 않음 → ", "size": 14},
-        {"text": "재사용 가능", "size": 14, "bold": True, "color": COLOR_ACCENT},
+        {"text": "▸ 과거 토큰의 K, V는 변하지 않음 → ", "size": 13},
+        {"text": "재사용 가능", "size": 13, "bold": True, "color": COLOR_ACCENT},
     ], space_after=10)
     add_rich_para(tf_d, [
-        {"text": "토큰 t개 · 레이어 L · 헤드 h · head_dim d 일 때", "size": 14, "color": COLOR_LIGHT}
+        {"text": "토큰 t개 · 레이어 L · 헤드 h · head_dim d 일 때", "size": 13, "color": COLOR_LIGHT}
     ], space_after=2)
     add_rich_para(tf_d, [
-        {"text": "KV size = 2 · t · L · h · d · sizeof(dtype)", "size": 14, "mono": True}
+        {"text": "KV size = 2 · t · L · h · d · sizeof(dtype)", "size": 13, "mono": True}
     ], space_after=8)
     add_rich_para(tf_d, [
         {"text": "예: OPT-13B, 2,048 토큰 → 약 0.78 GB / user",
@@ -357,17 +356,17 @@ def slide_04():
         ("vLLM, PagedAttention 류 가속 시스템도 ", "결국 KV cache 관리가 핵심"),
     ]:
         add_rich_para(tf, [
-            {"text": "•  ", "size": 14, "color": COLOR_ACCENT, "bold": True},
-            {"text": t[0], "size": 14},
-            {"text": t[1], "size": 14, "bold": True},
+            {"text": "•  ", "size": 13, "color": COLOR_ACCENT, "bold": True},
+            {"text": t[0], "size": 13},
+            {"text": t[1], "size": 13, "bold": True},
         ], space_after=4)
     add_rich_para(tf, [
         {"text": "이번 논문의 KV는?", "size": 16, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     add_rich_para(tf, [
-        {"text": "▸ 한 사용자의 ", "size": 14},
-        {"text": "여러 라운드 대화 KV", "size": 14, "bold": True, "color": COLOR_ACCENT},
-        {"text": "를 보존 — cross-user KV 공유는 범위 밖", "size": 14},
+        {"text": "▸ 한 사용자의 ", "size": 13},
+        {"text": "여러 라운드 대화 KV", "size": 13, "bold": True, "color": COLOR_ACCENT},
+        {"text": "를 보존 — cross-user KV 공유는 범위 밖", "size": 13},
     ])
     add_footer(s, 4)
 
@@ -381,15 +380,15 @@ def slide_05():
                   caption="Figure 5. 사용자 도착률 vs 동시 캐시 KV 총량 (perf layer 200GB 기준)")
     tf = add_textbox(s, Inches(0.5), Inches(1.3), Inches(6.0), Inches(5.6))
     for t in [
-        ("80GB A800 GPU 1장", " → Attention KV가 곧바로 GPU 메모리를 잡아먹음"),
-        ("사용자 30명/분 도착 시 ", "OPT-13B에서 동시 캐시 KV가 480GB까지 증가"),
-        ("일반적인 LLM 서버의 ", "host memory(perf layer)는 약 1.6×–3.2× of GPU memory"),
-        ("따라서 ", "host memory도 부족 → SSD(capacity layer)까지 사용해야 함"),
+        ("80GB A800 GPU 1장 ", "→ KV가 곧바로 GPU 메모리를 점유"),
+        ("30 users/min 도착 시 ",  "OPT-13B 동시 캐시 KV ≈ 480 GB"),
+        ("LLM 서버 host memory ", "≈ GPU mem 의 1.6–3.2×"),
+        ("→ host memory ", "도 부족, capacity SSD 도 사용해야 함"),
     ]:
         add_rich_para(tf, [
-            {"text": "•  ", "size": 14, "color": COLOR_ACCENT, "bold": True},
-            {"text": t[0], "size": 14, "bold": True},
-            {"text": t[1], "size": 14},
+            {"text": "•  ", "size": 13, "color": COLOR_ACCENT, "bold": True},
+            {"text": t[0], "size": 13, "bold": True},
+            {"text": t[1], "size": 13},
         ], space_after=6)
     # Big number callout
     box = add_rect(s, Inches(0.5), Inches(5.2), Inches(6.0), Inches(1.6),
@@ -402,7 +401,7 @@ def slide_05():
         {"text": " 초과", "size": 16},
     ], space_after=2)
     add_rich_para(tfb, [
-        {"text": "→ 2-tier (host memory + SSD) 캐싱이 필연", "size": 14, "italic": True,
+        {"text": "→ 2-tier (host memory + SSD) 캐싱이 필연", "size": 13, "italic": True,
          "color": COLOR_LIGHT}])
     add_footer(s, 5)
 
@@ -446,8 +445,8 @@ def slide_06():
                       anchor="middle")
     add_rich_para(tfc, [
         {"text": "쓰기는 백그라운드, 그러나 읽기(load)는 ",
-         "size": 14},
-        {"text": "critical path 위에 놓여 있다", "size": 14, "bold": True,
+         "size": 13},
+        {"text": "critical path 위에 놓여 있다", "size": 13, "bold": True,
          "color": COLOR_ACCENT},
     ])
     add_footer(s, 6)
@@ -462,24 +461,24 @@ def slide_07():
                   caption="Figure 3. KV recompute / 기존 cache / Ideal cache 의 latency 비교")
     tf = add_textbox(s, Inches(8.6), Inches(1.4), Inches(4.4), Inches(5.5))
     add_rich_para(tf, [
-        {"text": "측정 환경", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "측정 환경", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     add_rich_para(tf, [
         {"text": "OPT-13B · A800 80GB · 200GB host · 1.5 GB/s SSD",
          "size": 12, "color": COLOR_LIGHT}], space_after=10)
     add_rich_para(tf, [
-        {"text": "성능 격차", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "성능 격차", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     add_rich_para(tf, [
-        {"text": "▸ 응답 latency가 ", "size": 14},
-        {"text": "최대 3.8× 증가", "size": 14, "bold": True, "color": COLOR_ACCENT},
+        {"text": "▸ 응답 latency가 ", "size": 13},
+        {"text": "최대 3.8× 증가", "size": 13, "bold": True, "color": COLOR_ACCENT},
     ], space_after=4)
     add_rich_para(tf, [
-        {"text": "▸ throughput은 ", "size": 14},
-        {"text": "최대 2.0× 감소", "size": 14, "bold": True, "color": COLOR_ACCENT},
+        {"text": "▸ throughput은 ", "size": 13},
+        {"text": "최대 2.0× 감소", "size": 13, "bold": True, "color": COLOR_ACCENT},
     ], space_after=10)
     add_rich_para(tf, [
-        {"text": "Ideal vs reality?", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "Ideal vs reality?", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     add_rich_para(tf, [
         {"text": "Ideal = 모든 KV가 perf layer에 있다고 가정한 동일 시스템.",
@@ -499,18 +498,18 @@ def slide_08():
                   caption="Figure 4. (a) 사용자별 대화 지속시간, (b) 라운드 수 CDF")
     tf = add_textbox(s, Inches(8.6), Inches(1.4), Inches(4.4), Inches(5.5))
     add_rich_para(tf, [
-        {"text": "Trace 출처", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "Trace 출처", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     add_rich_para(tf, [
-        {"text": "China Telecom omni-channel — 1M+ 라운드, 사용자 단위 timestamp 보존",
+        {"text": "China Telecom · 1M+ 라운드 · user timestamp 보존",
          "size": 12, "color": COLOR_LIGHT}], space_after=10)
     add_rich_para(tf, [
-        {"text": "ShareGPT vs Mooncake와의 차이", "size": 14, "bold": True,
+        {"text": "ShareGPT vs Mooncake와의 차이", "size": 13, "bold": True,
          "color": COLOR_PRIMARY}], space_after=4)
     for t in [
-        "ShareGPT: 평균 5.7 라운드 — 인터랙티브 대화 분석에 부족",
-        "Mooncake: query 12k+ 토큰 — 길지만 대화 패턴은 부재",
-        "본 trace: 라운드 수 22.4 / 토큰 길이 36 — “interactive” 정의에 부합",
+        "ShareGPT: 5.7 라운드 — interactive 분석엔 짧음",
+        "Mooncake: 12k+ 토큰 — 길지만 대화 패턴 부재",
+        "본 trace: 22.4 라운드 / 36 토큰 — interactive 부합",
     ]:
         add_rich_para(tf, [
             {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
@@ -520,9 +519,9 @@ def slide_08():
     tfo = add_textbox(s, Inches(0.7), Inches(5.5), Inches(12), Inches(1.4),
                       anchor="middle")
     add_rich_para(tfo, [
-        {"text": "이어지는 세 슬라이드에서 ", "size": 14},
-        {"text": "Observation 1 / 2 / 3", "size": 14, "bold": True, "color": COLOR_ACCENT},
-        {"text": "을 차례로 살펴본다.",  "size": 14},
+        {"text": "이어지는 세 슬라이드에서 ", "size": 13},
+        {"text": "Observation 1 / 2 / 3", "size": 13, "bold": True, "color": COLOR_ACCENT},
+        {"text": "을 차례로 살펴본다.",  "size": 13},
     ])
     add_footer(s, 8)
 
@@ -536,22 +535,22 @@ def slide_09():
                   caption="Figure 5. 사용자 도착률 vs 동시 캐시 KV 총량 / 동시 사용자 수")
     tf = add_textbox(s, Inches(8.8), Inches(1.4), Inches(4.3), Inches(5.5))
     add_rich_para(tf, [
-        {"text": "관찰", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "관찰", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     for t in [
-        "사용자는 평균 22.4 라운드 동안 KV가 살아있어야 함",
-        "도착률이 늘면 동시 사용자 수가 선형 증가",
-        "OPT-13B에서 30 users/min일 때 480 GB > 200 GB perf layer",
+        "사용자 평균 22.4 라운드 동안 KV 가 생존",
+        "도착률↑ → 동시 사용자 수 선형 증가",
+        "OPT-13B · 30 users/min ≈ 480 GB (perf 200 GB)",
     ]:
         add_rich_para(tf, [
             {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
             {"text": t, "size": 13}], space_after=4)
     add_rich_para(tf, [
-        {"text": "함의", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "함의", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     for t in [
-        "perf layer가 아무리 크더라도 곧 한계",
-        "eviction을 잘 하지 못하면 capacity layer로 자주 fallback",
+        "perf layer 가 커도 결국 한계",
+        "eviction 부실 → capacity layer 로 빈번히 fallback",
     ]:
         add_rich_para(tf, [
             {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
@@ -568,14 +567,14 @@ def slide_10():
                   caption="Figure 6. (a) Weighted reuse distance CDF, (b) hit rate")
     tf = add_textbox(s, Inches(8.8), Inches(1.4), Inches(4.3), Inches(5.5))
     add_rich_para(tf, [
-        {"text": "Weighted reuse distance", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "Weighted reuse distance", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     add_rich_para(tf, [
         {"text": "두 access 사이에 접근된 ", "size": 12},
         {"text": "다른 KV의 총 크기 합", "size": 12, "bold": True},
     ], space_after=8)
     add_rich_para(tf, [
-        {"text": "수치", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "수치", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     for t in [
         ("80%의 KV access 가 ", "perf layer (200GB)를 초과"),
@@ -588,8 +587,8 @@ def slide_10():
             {"text": t[1], "size": 12, "bold": True},
         ], space_after=4)
     add_rich_para(tf, [
-        {"text": "→ 사용자가 다음 질문을 “생각하는 시간” 동안 ", "size": 12},
-        {"text": "다른 사용자 요청이 끼어들기 때문", "size": 12, "italic": True,
+        {"text": "→ 사용자가 답을 읽는 사이 ", "size": 12},
+        {"text": "다른 user KV 가 끼어들기 때문", "size": 12, "italic": True,
          "color": COLOR_LIGHT},
     ])
     add_footer(s, 10)
@@ -614,16 +613,16 @@ def slide_11():
         ("심지어 ", "5초 윈도우 내에서도 CV > 90% — globally 균일화되지 않음"),
     ]:
         add_rich_para(tf, [
-            {"text": "▸ ", "size": 14, "color": COLOR_ACCENT, "bold": True},
-            {"text": t[0], "size": 14},
-            {"text": t[1], "size": 14, "bold": True},
+            {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
+            {"text": t[0], "size": 13},
+            {"text": t[1], "size": 13, "bold": True},
         ], space_after=4)
     add_rich_para(tf, [
         {"text": "함의", "size": 16, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     add_rich_para(tf, [
-        {"text": "한 요청의 큰 KV가 도착할 때, ", "size": 14},
-        {"text": "뒤따르는 작은 KV 요청까지 모두 GPU idle 상태로 만든다", "size": 14,
+        {"text": "큰 KV 한 개가 ", "size": 13},
+        {"text": "뒤따르는 작은 KV 까지 GPU idle 로 만든다", "size": 13,
          "bold": True, "color": COLOR_ACCENT},
     ])
     add_footer(s, 11)
@@ -643,13 +642,13 @@ def slide_12():
          "size": 16, "bold": True, "color": COLOR_PRIMARY}], space_after=6)
     add_rich_para(tf1, [
         {"text": "▸ 어떤 요청의 KV가 perf layer에 있는지, capacity layer에 있는지",
-         "size": 14}], space_after=2)
+         "size": 13}], space_after=2)
     add_rich_para(tf1, [
         {"text": "▸ 어떤 요청의 KV size가 큰지 vs 작은지",
-         "size": 14}], space_after=2)
+         "size": 13}], space_after=2)
     add_rich_para(tf1, [
         {"text": "→ 그냥 FCFS로 dispatch → 큰 I/O가 큐 머리에 박히면 GPU idle",
-         "size": 14, "italic": True, "color": COLOR_ACCENT}])
+         "size": 13, "italic": True, "color": COLOR_ACCENT}])
     box2 = add_rect(s, Inches(6.8), Inches(1.4), Inches(6.0), Inches(2.8),
                     fill=COLOR_BG_BAND, line=COLOR_RULE)
     tf2 = add_textbox(s, Inches(7.0), Inches(1.5), Inches(5.6), Inches(2.6))
@@ -658,13 +657,13 @@ def slide_12():
          "size": 16, "bold": True, "color": COLOR_PRIMARY}], space_after=6)
     add_rich_para(tf2, [
         {"text": "▸ Eviction은 자기 측의 KV access history만 사용",
-         "size": 14}], space_after=2)
+         "size": 13}], space_after=2)
     add_rich_para(tf2, [
         {"text": "▸ 사용자의 다음 질문 timing은 compute가 만든 답변 길이에 좌우",
-         "size": 14}], space_after=2)
+         "size": 13}], space_after=2)
     add_rich_para(tf2, [
         {"text": "→ 정보 부재로 인해 hit rate ≈ 20% 수준",
-         "size": 14, "italic": True, "color": COLOR_ACCENT}])
+         "size": 13, "italic": True, "color": COLOR_ACCENT}])
     # Bottom take-away — bordered white box, no fill colour
     add_rect(s, Inches(0.5), Inches(4.5), Inches(12.3), Inches(2.4),
              fill=COLOR_WHITE, line=COLOR_RULE)
@@ -696,14 +695,14 @@ def slide_13():
         {"text": "Compute → Storage", "size": 16, "bold": True, "color": COLOR_PRIMARY}
     ], space_after=4)
     add_rich_para(tf1, [
-        {"text": "이전 라운드의 ", "size": 14},
-        {"text": "model answer 길이", "size": 14, "bold": True, "color": COLOR_ACCENT},
-        {"text": "를 storage 측에 넘긴다", "size": 14},
+        {"text": "이전 라운드의 ", "size": 13},
+        {"text": "model answer 길이", "size": 13, "bold": True, "color": COLOR_ACCENT},
+        {"text": "를 storage 에 넘긴다", "size": 13},
     ], space_after=8)
     for t in [
-        "이 길이는 사용자의 다음 질문이 도착할 시점을 예측하는 신호",
-        "Storage는 이 신호로 next-access의 weighted reuse distance를 추정",
-        "추정 결과로 hit potential이 가장 낮은 KV를 evict",
+        "이 길이가 다음 질문 도착 시점의 예측 신호",
+        "Storage 는 신호로 next-access reuse distance 추정",
+        "hit potential 최저 KV 를 evict",
     ]:
         add_rich_para(tf1, [
             {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
@@ -716,14 +715,14 @@ def slide_13():
         {"text": "Storage → Compute", "size": 16, "bold": True, "color": COLOR_PRIMARY}
     ], space_after=4)
     add_rich_para(tf2, [
-        {"text": "각 요청 KV의 ", "size": 14},
-        {"text": "위치(layer)와 크기", "size": 14, "bold": True, "color": COLOR_ACCENT},
-        {"text": "를 compute 측에 넘긴다", "size": 14},
+        {"text": "각 요청 KV 의 ", "size": 13},
+        {"text": "위치 (layer) 와 크기", "size": 13, "bold": True, "color": COLOR_ACCENT},
+        {"text": "를 compute 에 넘긴다", "size": 13},
     ], space_after=8)
     for t in [
-        "Compute는 KV가 어디에 있고 얼마나 큰지를 알고 dispatch",
-        "두 개 큐(ready / preparing)로 I/O 길이를 결정성과 분리",
-        "GPU idle 시간을 제거하고 큐잉 지연을 줄임",
+        "Compute 는 KV 위치/크기 알고 dispatch",
+        "ready / preparing 두 큐로 I/O 길이를 분리",
+        "GPU idle 제거 + 큐잉 지연 감소",
     ]:
         add_rich_para(tf2, [
             {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
@@ -808,7 +807,7 @@ def slide_16():
                   caption="Figure 10. I/O-aware request scheduling 전략 개관")
     tf = add_textbox(s, Inches(8.1), Inches(1.3), Inches(5.0), Inches(5.6))
     add_rich_para(tf, [
-        {"text": "왜 단순 overlap이 안 되는가", "size": 14, "bold": True,
+        {"text": "왜 단순 overlap이 안 되는가", "size": 13, "bold": True,
          "color": COLOR_PRIMARY}], space_after=4)
     for t in [
         "한 iteration의 GPU compute = 수십 ms",
@@ -846,12 +845,12 @@ def slide_17():
         {"text": "Dual queue", "size": 16, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     add_rich_para(tfL, [
-        {"text": "Ready queue", "size": 14, "bold": True}], space_after=2)
+        {"text": "Ready queue", "size": 13, "bold": True}], space_after=2)
     add_rich_para(tfL, [
         {"text": "KV가 perf layer에 있는 요청 — FCFS, GPU에 즉시 dispatch",
          "size": 13, "color": COLOR_LIGHT}], space_after=6)
     add_rich_para(tfL, [
-        {"text": "Preparing queue", "size": 14, "bold": True}], space_after=2)
+        {"text": "Preparing queue", "size": 13, "bold": True}], space_after=2)
     add_rich_para(tfL, [
         {"text": "KV가 capacity layer에 있는 요청 — 백그라운드로 perf layer로 끌어올림",
          "size": 13, "color": COLOR_LIGHT}], space_after=10)
@@ -870,9 +869,9 @@ def slide_17():
         {"text": "Response ratio = 1 + (Request waiting time) / (KV size)",
          "size": 16, "mono": True}], space_after=10)
     for t in [
-        ("작은 KV 요청을 먼저 ", "→ ready queue로 빨리 promote"),
-        ("그러나 waiting time이 증가하면 ", "큰 KV도 결국 promote (기아 방지)"),
-        ("classical HRRN을 ", "I/O 시간 ≈ KV size 가정으로 변형"),
+        ("작은 KV 먼저 ",        "→ ready queue 로 빨리 promote"),
+        ("waiting↑ 시 ",        "큰 KV 도 promote (기아 방지)"),
+        ("classical HRRN 의 ",  "I/O time ≈ KV size 변형"),
     ]:
         add_rich_para(tfR, [
             {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
@@ -891,7 +890,7 @@ def slide_18():
                   caption="Figure 11. (a) FCFS vs (b) I/O-aware scheduling 의 timeline 비교")
     tf = add_textbox(s, Inches(8.8), Inches(1.4), Inches(4.3), Inches(5.5))
     add_rich_para(tf, [
-        {"text": "(a) FCFS", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "(a) FCFS", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     add_rich_para(tf, [
         {"text": "req 1, 2 (큰 capacity-layer KV)가 머리에서 대기 →",
@@ -900,7 +899,7 @@ def slide_18():
         {"text": "GPU와 perf-layer I/O 가 모두 idle", "size": 13, "italic": True,
          "color": COLOR_ACCENT}], space_after=10)
     add_rich_para(tf, [
-        {"text": "(b) I/O-aware", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "(b) I/O-aware", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     add_rich_para(tf, [
         {"text": "req 3, 4, 5 (perf-layer hit) 먼저 GPU로 → 그 사이 req 2 가 promote",
@@ -921,7 +920,7 @@ def slide_19():
                   caption="Figure 12. Hour 별로 답변 길이(가로축) vs 다음 KV access의 reuse distance(세로축). 빨간 라인 = 하한")
     tf = add_textbox(s, Inches(0.5), Inches(5.2), Inches(12.3), Inches(1.8))
     add_rich_para(tf, [
-        {"text": "정의 — Weighted reuse distance", "size": 14, "bold": True,
+        {"text": "정의 — Weighted reuse distance", "size": 13, "bold": True,
          "color": COLOR_PRIMARY}], space_after=2)
     add_rich_para(tf, [
         {"text": "현재 access ↔ 다음 access 사이에 접근되는 다른 KV 의 ",
@@ -949,18 +948,18 @@ def slide_20():
         {"text": "세 영역으로 분할", "size": 16, "bold": True, "color": COLOR_PRIMARY}],
         space_after=4)
     add_rich_para(tf, [
-        {"text": "Small  (< perf layer size)", "size": 14, "bold": True}], space_after=2)
+        {"text": "Small  (< perf layer size)", "size": 13, "bold": True}], space_after=2)
     add_rich_para(tf, [
         {"text": "어떤 정책이든 hit ≈ 1.0", "size": 13, "color": COLOR_LIGHT}],
         space_after=8)
     add_rich_para(tf, [
-        {"text": "Promising  (중간 영역)", "size": 14, "bold": True, "color": COLOR_ACCENT}],
+        {"text": "Promising  (중간 영역)", "size": 13, "bold": True, "color": COLOR_ACCENT}],
         space_after=2)
     add_rich_para(tf, [
         {"text": "Optimal(Belady)은 100% 가까이 유지하지만 LRU는 0~40% 수준",
          "size": 13, "color": COLOR_LIGHT}], space_after=8)
     add_rich_para(tf, [
-        {"text": "Extreme  (440 GB+)", "size": 14, "bold": True}], space_after=2)
+        {"text": "Extreme  (440 GB+)", "size": 13, "bold": True}], space_after=2)
     add_rich_para(tf, [
         {"text": "Optimal도 hit ≈ 0 — eviction 후보 1순위", "size": 13,
          "color": COLOR_LIGHT}])
@@ -970,10 +969,10 @@ def slide_20():
                       anchor="middle")
     add_rich_para(tfb, [
         {"text": "교훈 — distance만 보고 evict하면 promising 구간을 잃는다.\n",
-         "size": 14},
-        {"text": "Optimal과의 격차를 좁히려면 ", "size": 14},
-        {"text": "구간별 hit 확률을 모델링", "size": 14, "bold": True, "color": COLOR_ACCENT},
-        {"text": "해야 한다.", "size": 14},
+         "size": 13},
+        {"text": "Optimal과의 격차를 좁히려면 ", "size": 13},
+        {"text": "구간별 hit 확률을 모델링", "size": 13, "bold": True, "color": COLOR_ACCENT},
+        {"text": "해야 한다.", "size": 13},
     ])
     add_footer(s, 20)
 
@@ -1002,7 +1001,7 @@ def slide_21():
             align="center")
         tf = add_textbox(s, Inches(1.3), y + Inches(0.05), Inches(11.5), Inches(0.8),
                          anchor="middle")
-        add_rich_para(tf, [{"text": t, "size": 14, "color": COLOR_TEXT}])
+        add_rich_para(tf, [{"text": t, "size": 13, "color": COLOR_TEXT}])
     add_footer(s, 21)
 
 
@@ -1037,8 +1036,8 @@ def slide_22():
         tf = add_textbox(s, Inches(0.7), y, Inches(12), Inches(0.6))
         add_rich_para(tf, [
             {"text": "▸  ", "size": 13, "bold": True, "color": COLOR_ACCENT},
-            {"text": term, "size": 14, "bold": True, "mono": True, "color": COLOR_PRIMARY},
-            {"text": "    ", "size": 14},
+            {"text": term, "size": 13, "bold": True, "mono": True, "color": COLOR_PRIMARY},
+            {"text": "    ", "size": 13},
             {"text": desc, "size": 13},
         ])
     # Note about ghost cache
@@ -1064,21 +1063,20 @@ def slide_23():
                   caption="Figure 14. (a) Tensor 별 size & 절약 가능한 GFLOPs, (b) cost efficiency")
     tf = add_textbox(s, Inches(8.3), Inches(1.4), Inches(4.8), Inches(5.5))
     add_rich_para(tf, [
-        {"text": "왜 KV tensor가 최적이 아닌가", "size": 14, "bold": True,
+        {"text": "왜 KV tensor가 최적이 아닌가", "size": 13, "bold": True,
          "color": COLOR_PRIMARY}], space_after=4)
     add_rich_para(tf, [
-        {"text": "▸ KV tensor는 attention 입력으로 직접 필요하지만 ",
-         "size": 13},
-        {"text": "size가 큼", "size": 13, "bold": True},
+        {"text": "▸ KV tensor 는 attention 입력으로 ", "size": 13},
+        {"text": "필요하지만 size 가 큼", "size": 13, "bold": True},
     ], space_after=6)
     add_rich_para(tf, [
-        {"text": "Cost Efficiency", "size": 14, "bold": True, "color": COLOR_PRIMARY}],
+        {"text": "Cost Efficiency", "size": 13, "bold": True, "color": COLOR_PRIMARY}],
         space_after=2)
     add_rich_para(tf, [
         {"text": "= Saved compute / Required space  (GFLOPs/MB)",
          "size": 13, "mono": True}], space_after=8)
     add_rich_para(tf, [
-        {"text": "Tensor 6 (정규화된 activation)", "size": 14, "bold": True,
+        {"text": "Tensor 6 (정규화된 activation)", "size": 13, "bold": True,
          "color": COLOR_ACCENT}], space_after=2)
     add_rich_para(tf, [
         {"text": "▸ 51 GFLOPs/MB — KV tensor(30.5)의 1.67×",
@@ -1222,9 +1220,9 @@ def slide_27():
         ("Note ",              "Bidaw는 lossless — 답변 정확도는 FlashGen 등과 동일"),
     ]:
         add_rich_para(tf, [
-            {"text": "▸ ", "size": 14, "color": COLOR_ACCENT, "bold": True},
-            {"text": t[0], "size": 14, "bold": True},
-            {"text": t[1], "size": 14}], space_after=4)
+            {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
+            {"text": t[0], "size": 13, "bold": True},
+            {"text": t[1], "size": 13}], space_after=4)
     add_footer(s, 27)
 
 
@@ -1239,7 +1237,7 @@ def slide_28():
                   caption="Figure 18. (a) memory size · (b) workload pressure")
     tf = add_textbox(s, Inches(0.5), Inches(4.4), Inches(12.3), Inches(2.7))
     add_rich_para(tf, [
-        {"text": "Memory sensitivity (Fig. 16)", "size": 14, "bold": True,
+        {"text": "Memory sensitivity (Fig. 16)", "size": 13, "bold": True,
          "color": COLOR_PRIMARY}], space_after=4)
     for t in [
         "host memory 120GB까지 줄여도 Bidaw는 baseline 200GB 수준의 latency",
@@ -1249,7 +1247,7 @@ def slide_28():
             {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
             {"text": t, "size": 13}], space_after=2)
     add_rich_para(tf, [
-        {"text": "Eviction miss rate (Fig. 18)", "size": 14, "bold": True,
+        {"text": "Eviction miss rate (Fig. 18)", "size": 13, "bold": True,
          "color": COLOR_PRIMARY}], space_after=4)
     for t in [
         ("queue-enhanced (CachedAttention)",  "대비 -57.6% miss rate"),
@@ -1281,9 +1279,9 @@ def slide_29():
         ("Overhead",     "Scheduling 0.62 ms, Eviction 0.35 ms, KV transform <0.1 s"),
     ]:
         add_rich_para(tf, [
-            {"text": "▸ ", "size": 14, "color": COLOR_ACCENT, "bold": True},
-            {"text": t[0], "size": 14, "bold": True, "color": COLOR_PRIMARY},
-            {"text": "    " + t[1], "size": 14}], space_after=6)
+            {"text": "▸ ", "size": 13, "color": COLOR_ACCENT, "bold": True},
+            {"text": t[0], "size": 13, "bold": True, "color": COLOR_PRIMARY},
+            {"text": "    " + t[1], "size": 13}], space_after=6)
     add_footer(s, 29)
 
 
