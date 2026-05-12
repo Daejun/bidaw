@@ -170,7 +170,7 @@ def add_header_band(slide, title, *, kicker=None):
     ])
 
 
-def add_footer(slide, page_num, total=30):
+def add_footer(slide, page_num, total=31):
     """Minimal footer: a small grey page number on the bottom-right.
     No conference name strip — Kwon-style decks keep the bottom clean."""
     tf2 = add_textbox(slide, SLIDE_W - Inches(1.2), Inches(7.05), Inches(0.9), Inches(0.3))
@@ -1058,7 +1058,34 @@ def slide_22():
     add_footer(s, 22)
 
 
-# ---- Slide 23: Tensor cost efficiency -------------------------------------
+# ---- Slide 22b: Worked example A vs B ------------------------------------
+def slide_22b():
+    s = add_slide()
+    add_header_band(s, "예시 — 두 사용자의 답변 길이에 따른 evict 결정",
+                    kicker="MECHANISM 2 / 3")
+
+    # Use the matplotlib-rendered figure
+    example_path = "/home/pdaejun/bidaw/figures/example_alice_bob.png"
+    add_image_fit(s, example_path, Inches(0.4), Inches(1.4),
+                  Inches(12.5), Inches(4.7))
+
+    # Bottom takeaway
+    tfb = add_textbox(s, Inches(0.5), Inches(6.4), Inches(12.3), Inches(0.7),
+                      anchor="middle")
+    add_rich_para(tfb, [
+        {"text": "같은 과거 분포라도 ", "size": 16, "color": COLOR_TEXT},
+        {"text": "직전 답변 길이 한 가지", "size": 16, "bold": True,
+         "color": COLOR_ACCENT},
+        {"text": "가 potential 을 ", "size": 16, "color": COLOR_TEXT},
+        {"text": "0.79 ↔ 0.07", "size": 16, "bold": True,
+         "color": COLOR_ACCENT},
+        {"text": "로 가른다", "size": 16, "color": COLOR_TEXT},
+    ], align="center")
+
+    add_footer(s, 23)
+
+
+# ---- Slide 23 (now page 24): Tensor cost efficiency ----------------------
 def slide_23():
     s = add_slide()
     add_header_band(s, "Mechanism 3 — 어떤 tensor를 캐싱할 것인가",
@@ -1090,7 +1117,7 @@ def slide_23():
         {"text": "GPU 1 step", "size": 18, "bold": True},
         {"text": "이면 충분", "size": 18},
     ])
-    add_footer(s, 23)
+    add_footer(s, 24)
 
 
 # ---- Slide 24: MHA vs GQA -------------------------------------------------
@@ -1135,7 +1162,7 @@ def slide_24():
         {"text": "→ GQA에서는 ", "size": 18},
         {"text": "KV tensor를 그대로 캐싱", "size": 18, "bold": True, "color": COLOR_ACCENT},
     ])
-    add_footer(s, 24)
+    add_footer(s, 25)
 
 
 # ---- Slide 25: Implementation notes ---------------------------------------
@@ -1163,7 +1190,7 @@ def slide_25():
             {"text": head, "size": 20, "bold": True, "color": COLOR_PRIMARY}],
             space_after=4)
         add_rich_para(tf, [{"text": body, "size": 18}])
-    add_footer(s, 25)
+    add_footer(s, 26)
 
 
 # ---- Slide 26: Eval setup -------------------------------------------------
@@ -1206,7 +1233,7 @@ def slide_26():
             {"text": "▸ ", "size": 18, "color": COLOR_ACCENT, "bold": True},
             {"text": t[0], "size": 18, "bold": True},
             {"text": "  " + t[1], "size": 14, "color": COLOR_LIGHT}], space_after=4)
-    add_footer(s, 26)
+    add_footer(s, 27)
 
 
 # ---- Slide 27: Overall performance ----------------------------------------
@@ -1227,7 +1254,7 @@ def slide_27():
             {"text": "▸ ", "size": 18, "color": COLOR_ACCENT, "bold": True},
             {"text": t[0], "size": 18, "bold": True},
             {"text": t[1], "size": 18}], space_after=4)
-    add_footer(s, 27)
+    add_footer(s, 28)
 
 
 # ---- Slide 28: Memory sensitivity + miss rate -----------------------------
@@ -1262,7 +1289,7 @@ def slide_28():
             {"text": t[0], "size": 18},
             {"text": "  " + t[1], "size": 18, "bold": True},
         ], space_after=2)
-    add_footer(s, 28)
+    add_footer(s, 29)
 
 
 # ---- Slide 29: Tail latency, ablation, overhead ---------------------------
@@ -1286,7 +1313,7 @@ def slide_29():
             {"text": "▸ ", "size": 18, "color": COLOR_ACCENT, "bold": True},
             {"text": t[0], "size": 18, "bold": True, "color": COLOR_PRIMARY},
             {"text": "    " + t[1], "size": 18}], space_after=6)
-    add_footer(s, 29)
+    add_footer(s, 30)
 
 
 # ---- Slide 30: Conclusion -------------------------------------------------
@@ -1329,7 +1356,7 @@ def slide_30():
             add_rich_para(tf, [
                 {"text": "▸ ", "size": 18, "color": COLOR_ACCENT, "bold": True},
                 {"text": it, "size": 14}], space_after=6)
-    add_footer(s, 30)
+    add_footer(s, 31)
 
 
 # Build
@@ -1338,7 +1365,7 @@ for fn in [
     slide_06, slide_07, slide_08, slide_09, slide_10,
     slide_11, slide_12, slide_13, slide_14, slide_15,
     slide_16, slide_17, slide_18, slide_19, slide_20,
-    slide_21, slide_22, slide_23, slide_24, slide_25,
+    slide_21, slide_22, slide_22b, slide_23, slide_24, slide_25,
     slide_26, slide_27, slide_28, slide_29, slide_30,
 ]:
     fn()
